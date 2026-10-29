@@ -1,161 +1,174 @@
 # Automotive Service Plan Profitability Analysis
 
-## Project Overview
+**SQL · Power BI · DAX · Power Query**
 
-This portfolio project analyses automotive service plan performance using SQL and Power BI.
+> **Headline result:** The service plan portfolio made an overall loss of about **£210K (profit margin −9.50%)**. Every vehicle model was loss making, only **Comprehensive** plans were profitable, and service costs rose with service volume. The analysis recommends where management should review pricing and control costs.
 
-The objective is to understand service plan revenue, service costs and profitability, identify the main cost drivers, and provide business recommendations to improve plan profitability.
-
-The project uses synthetic automotive service plan data created for portfolio purposes.
-
-## Business Questions
-
-The analysis explores:
-
-- How many service plans were sold and how much revenue was generated?
-- How does profitability differ across service plan types?
-- Which plan types are generating losses?
-- Which vehicle models have the highest service costs?
-- What are the main labour and parts cost drivers?
-- Which vehicle models and plan types create the greatest profitability pressure?
-- How does profitability vary across dealers?
-- Does service frequency appear to influence service costs?
-- Where should management focus cost control and pricing reviews?
-
-## Tools & Technologies
-
-- *SQL* — business analysis and data exploration
-- *Power BI* — interactive dashboard development
-- *Power Query* — data cleaning and transformation
-- *DAX* — calculated measures and profitability metrics
-- *Excel* — supporting data preparation
-
-## Data Preparation
-
-The synthetic dataset was deliberately created with realistic data-quality challenges, including:
-
-- Duplicate records
-- Missing dealer information
-- Missing plan type information
-- Missing mileage values
-- Missing parts cost values
-- Inconsistent text formatting
-- An unusual negative labour-cost value requiring investigation
-
-Data was reviewed and cleaned using Power Query before being analysed in Power BI.
-
-Missing categorical values that could not be reliably derived were classified as Unknown rather than being guessed.
-
-Financial relationships were also validated, including:
-
-- Total Service Cost = Labour Cost + Parts Cost
-- Profit = Total Revenue - Total Service Cost
-
-## SQL Analysis
-
-SQL was used to investigate:
-
-1. Overall plan sales and revenue
-2. Profitability by plan type
-3. Average revenue and service cost
-4. Loss-making plan types
-5. Vehicle model service costs
-6. Labour versus parts cost drivers
-7. Vehicle model and plan type profitability
-8. Orion GT cost drivers
-9. Unknown plan type and data-quality issues
-10. Dealer profitability
-
-The complete SQL analysis is available in:
-
-automotive_service_plan_profitability_analysis.sql
-
-## Power BI Dashboard
-
-### 1. Executive Overview
-
-Provides a high-level view of:
-
-- Total service plans
-- Total revenue
-- Total service cost
-- Total profit
-- Overall profit margin
-- Revenue versus service cost by vehicle model
-- Profitability by plan type
-- Average service cost by vehicle model
-
-### 2. Vehicle & Plan Profitability
-
-Examines profitability and service-cost pressure across:
-
-- Vehicle models
-- Plan types
-- Service volume
-- Service cost
-- Profitability
-
-The analysis highlights the relationship between service frequency and service costs.
-
-### 3. Overall Profitability & Recommendations
-
-Provides an overall profitability assessment and highlights:
-
-- Dealer profitability
-- Profit margin by plan type
-- Key financial findings
-- Recommended areas for management review
-
-## Key Findings
-
-- The service plan portfolio generated approximately *£2.25M in revenue* against approximately *£2.42M in service costs*.
-- Overall portfolio profit was approximately *-£210K*, resulting in an overall negative profit margin.
-- *All vehicle models were loss-making*, indicating that profitability pressure was portfolio-wide rather than isolated to one model.
-- *Venture* recorded the largest absolute vehicle-model loss.
-- *Falcon X2* had high service frequency and relatively high average cost per service, making it an important area for profitability review.
-- *Comprehensive* plans were profitable, while other major plan types generated losses.
-- Dealer profitability varied considerably, indicating opportunities for targeted pricing and cost reviews.
-- Service costs generally increased with service volume, highlighting service frequency as an important profitability driver.
-
-## Business Recommendations
-
-Based on the analysis:
-
-1. Review pricing and coverage assumptions for loss-making service plans.
-2. Investigate high-cost vehicle models and recurring maintenance cost drivers.
-3. Assess whether service frequency and plan duration are appropriately reflected in plan pricing.
-4. Review labour and parts costs separately to identify opportunities for cost control.
-5. Monitor profitability by plan type, vehicle model and dealer.
-6. Investigate records classified as Unknown to improve data quality and reporting accuracy.
-
-## Project Files
-
-| File | Description |
-|---|---|
-| Automotive Service Plan Profitability.pbix | Power BI dashboard |
-| automotive_service_plan_profitability_analysis.sql | SQL business analysis |
-| Executive Overview.PNG | Executive dashboard |
-| Vehicle & Plan Profitability.PNG | Vehicle and plan profitability analysis |
-| Overall Profitability & Recommendations.PNG | Overall profitability and recommendations |
-
-## Skills Demonstrated
-
-- SQL querying
-- Data cleaning and validation
-- Business analysis
-- Profitability analysis
-- Cost-driver analysis
-- Power Query
-- Power BI data modelling
-- DAX measures
-- Data visualisation
-- Business storytelling
-- Translating data into actionable recommendations
-
-## Data Disclaimer
-
-*This project uses synthetic/demo data created for portfolio and learning purposes. It does not contain confidential, proprietary, customer, or employer data.*
+*This is a portfolio project using synthetic data created for demonstration. No employer, customer or confidential data is used.*
 
 ---
 
-*Portfolio Project | Automotive After-Sales / Service Plan Analytics*
+## At a glance
+
+| Metric | Result |
+|---|---|
+| Service plans in the dataset | 520 |
+| Plans excluded from profit analysis (missing cost data) | 7 (£32.59K of revenue) |
+| Total revenue (all plans) | £2.25M |
+| Total service cost | £2.42M |
+| Total profit | −£210.37K |
+| Profit margin | −9.50% |
+
+Profit and margin are calculated only on plans with complete cost data, so revenue and cost are compared on the same set of plans. See [Data validation and reconciliation](#data-validation-and-reconciliation).
+
+---
+
+## Business problem
+
+A service plan provider needs to know whether its plans make money. This project answers:
+
+1. How many plans were sold, and how much revenue did they generate?
+2. How does profitability differ across plan types?
+3. Which plan types lose money?
+4. Which vehicle models have the highest service costs?
+5. What are the main labour and parts cost drivers?
+6. How does profitability vary across dealers?
+7. Does service frequency influence service costs?
+8. Where should management focus cost control and pricing reviews?
+
+---
+
+## Key findings
+
+1. **The portfolio lost money.** Total service costs exceeded revenue by 9.50%, an overall loss of about £210K.
+2. **The problem is portfolio wide.** All vehicle models were loss making. **Venture** had the largest absolute loss (about £50K), and **Falcon X2** combined high service frequency with a relatively high average cost per service.
+3. **Only Comprehensive plans were profitable.** Comprehensive plans earned a positive margin (+17.39%), while Premium (−6.97%), Standard (−30.53%) and plans with an Unknown type made losses.
+4. **Dealer performance varied widely.** Eastside Motors and Lakeside Cars were profitable, while the other dealers made losses, with Central Cars the largest (−£76,178.94).
+5. **Service frequency is a cost driver.** Service costs generally increased with service volume, so plan pricing should reflect how often vehicles are serviced.
+
+---
+
+## Recommendations
+
+1. **Review pricing and coverage** for the loss making plan types, especially Standard.
+2. **Investigate high cost vehicle models**, particularly Venture, and the recurring maintenance costs behind them.
+3. **Reflect service frequency and plan duration in pricing.** Costs rise with volume, so prices should too.
+4. **Review labour and parts costs separately** to find specific cost control opportunities.
+5. **Look into dealer differences** in profitability and service cost, and learn from the profitable dealers.
+6. **Fix the Unknown records** (plan type and dealer) so future reporting is reliable.
+
+---
+
+## Data preparation
+
+The dataset was deliberately built with realistic data quality problems:
+
+- Duplicate records
+- Missing dealer, plan type, mileage and parts cost values
+- Inconsistent text formatting
+- An unusual negative labour cost, which was investigated
+
+**Approach:**
+- Cleaned and standardised the data in **Power Query** before analysis.
+- Classed missing categories that could not be reliably worked out as **Unknown** instead of guessing.
+- Did not estimate or fill in missing costs.
+
+---
+
+## Data validation and reconciliation
+
+I checked the financial relationships before reporting:
+
+- Total Service Cost = Labour Cost + Parts Cost
+- Profit = Total Revenue − Total Service Cost
+
+While checking the dashboard totals, I found that revenue minus cost did not match the sum of the profit column. The cause was **7 plans with no service cost or profit value** (missing parts cost). They had revenue but could not be given a reliable profit.
+
+**What I did:**
+- Kept the 7 plans in the data because their other fields are valid.
+- Made revenue, cost, profit and margin calculations use the **same set of plans**, so the totals reconcile.
+- Reported the exclusion openly on the dashboard (7 plans, £32.59K of revenue).
+
+**Effect on the result:** The profit margin moved from −9.37% to **−9.50%** once revenue and profit were calculated on the same plans.
+
+---
+
+## Key DAX measures
+
+```DAX
+Total Profit = SUM('Automotive Service plan profitability'[Profit])
+
+Total Revenue (Complete) =
+SUMX( FILTER('Automotive Service plan profitability', NOT ISBLANK( 'Automotive Service plan profitability'[Total service cost])),'Automotive Service plan profitability'[Total Revenue])
+
+Profit Margin = DIVIDE([Total Profit], [Total Revenue (Complete)])
+```
+
+---
+
+## SQL analysis
+
+SQL was used to explore:
+
+- Overall plan sales and revenue
+- Profitability by plan type
+- Average revenue and service cost
+- Loss making plan types
+- Vehicle model service costs
+- Labour versus parts cost drivers
+- Profitability by vehicle model and plan type
+- Dealer profitability
+- Unknown plan types and data quality issues
+
+The full queries are in `automotive_service_plan_profitability_analysis.sql`.
+
+---
+
+## Power BI dashboard
+
+**1. Executive Overview:** total plans, revenue, service cost, profit and margin, with revenue versus service cost by vehicle model, profitability by plan type, and average service cost by model.
+
+![Executive Overview](images/executive_overview.PNG)
+
+**2. Vehicle & Plan Profitability:** profitability and service cost by vehicle model and plan type, and the relationship between service volume and cost.
+
+![Vehicle and Plan Profitability](images/vehicle_plan_profitability.PNG)
+
+**3. Overall Profitability & Recommendations:** profit by dealer, margin by plan type, key findings and recommended actions.
+
+![Overall Profitability and Recommendations](images/overall_profitability_recommendations.PNG)
+
+---
+
+## Skills demonstrated
+
+- Writing SQL to answer business questions
+- Data cleaning and transformation in Power Query
+- Data modelling and DAX measures in Power BI
+- Data validation and reconciling totals
+- Dashboard design and data visualisation
+- Turning analysis into clear business recommendations
+
+---
+
+## Limitations
+
+- The data is synthetic, so the results demonstrate the analytical approach and are not real business findings.
+- The link between service volume and cost shows a relationship, not proof of cause.
+- 7 plans with missing cost data were excluded from profit analysis, and Unknown categories remain in some views.
+
+---
+
+## Project files
+
+| File | Description |
+|---|---|
+| `Automotive service plan profitability Project.pbix` | Power BI report |
+| `automotive_service_plan_profitability_analysis.sql` | SQL analysis |
+| `images/` | Dashboard screenshots |
+
+---
+
+*Updated 28 October 2026: revenue and margin now use the same plans as profit (7 plans with missing cost data excluded).*
+
+**Author:** Daniel Akhimie · [LinkedIn](https://www.linkedin.com/in/daniel-akhimie-770a43261/)
